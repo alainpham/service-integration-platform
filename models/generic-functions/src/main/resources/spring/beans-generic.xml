@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configures the Camel Context -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+	<!-- ########################################################### -->
+	<!-- Embedded A-MQ connection -->
+	<!-- ########################################################### -->
+	<bean class="org.apache.activemq.ActiveMQConnectionFactory" id="jmsConnectionFactory">
+		<property name="brokerURL" value="${brokerUrl}" />
+		<property name="userName" value="${brokerUsr}" />
+		<property name="password" value="${brokerPwd}" />
+	</bean>
+	<bean class="org.apache.activemq.pool.PooledConnectionFactory"
+		destroy-method="stop" id="pooledConnectionFactory" init-method="start"
+		primary="true">
+		<property name="maxConnections" value="4" />
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+	<bean class="org.apache.camel.component.jms.JmsConfiguration" id="jmsConfig">
+		<property name="connectionFactory" ref="pooledConnectionFactory" />
+		<property name="concurrentConsumers" value="4" />
+	</bean>
+	<bean class="org.apache.activemq.camel.component.ActiveMQComponent"
+		id="activemq">
+		<property name="configuration" ref="jmsConfig" />
+	</bean>
+	<bean class="com.redhat.empowered.generic.model.GenericObjectFactory"
+		id="genericObjectFactory" />
+</beans>

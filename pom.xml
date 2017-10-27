@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>platform.integration.service</groupId>
+	<artifactId>service-integration-platform-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		    <!-- maven plugin versions -->
+		    <fabric8.maven.plugin.version>3.1.80.redhat-000019</fabric8.maven.plugin.version>
+
+		    <!-- configure the versions you want to use here -->
+		    <fabric8.version>2.2.170.redhat-000019</fabric8.version>
+		    <spring-boot.version>1.4.1.RELEASE</spring-boot.version>
+
+		    <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+		    <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+		<version.org.infinispan>8.4.0.Final-redhat-2</version.org.infinispan>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.infinispan</groupId>
+				<artifactId>infinispan-bom</artifactId>
+				<version>${version.org.infinispan}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.fabric8</groupId>
+				<artifactId>fabric8-project-bom-camel-spring-boot</artifactId>
+				<version>${fabric8.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-query</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-embedded</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>models</module>
+		<module>services</module>
+	</modules>
+</project>
